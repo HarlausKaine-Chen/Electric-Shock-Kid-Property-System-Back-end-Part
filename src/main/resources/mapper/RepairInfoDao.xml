@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.RepairInfoDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.entity.RepairInfoEntity" id="repairInfoMap">
+        <result property="repairText" column="repairText"/>
+        <result property="userId" column="user_id"/>
+        <result property="crtTime" column="crt_time"/>
+        <result property="repairPro" column="repairPro"/>
+    </resultMap>
+
+	<select id="selectListVO"
+		resultType="com.entity.vo.RepairInfoVO" >
+		SELECT * FROM repair_info  repair_info
+        <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+	<select id="selectVO"
+		resultType="com.entity.vo.RepairInfoVO" >
+		SELECT  repair_info.* FROM repair_info  repair_info
+ 		<where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+
+    <select id="selectListView"
+		resultType="com.entity.view.RepairInfoView" >
+
+		SELECT  repair_info.* FROM repair_info  repair_info
+        <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+	<select id="selectView"
+		resultType="com.entity.view.RepairInfoView" >
+		SELECT * FROM repair_info  repair_info <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+	<update id="updatePro">
+		update repair_info set repair_pro=#{param1} where id=#{param2}
+	</update>
+	
+</mapper>

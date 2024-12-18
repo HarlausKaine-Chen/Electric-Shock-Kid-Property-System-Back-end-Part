@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.WeFeesDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.entity.WeFeesEntity" id="weFeesMap">
+        <result property="waterFee" column="water_fee"/>
+        <result property="electricityFee" column="electricity_fee"/>
+        <result property="crtTime" column="crt_time"/>
+        <result property="month" column="month"/>
+        <result property="isPay" column="isPay"/>
+        <result property="hostelNo" column="hostel_no"/>
+    </resultMap>
+
+	<select id="selectListVO"
+		resultType="com.entity.vo.WeFeesVO" >
+		SELECT * FROM we_fees  we_fees
+        <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+	<select id="selectVO"
+		resultType="com.entity.vo.WeFeesVO" >
+		SELECT  we_fees.* FROM we_fees  we_fees
+ 		<where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+
+    <select id="selectListView"
+		resultType="com.entity.view.WeFeesView" >
+
+		SELECT  we_fees.* FROM we_fees  we_fees
+        <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+	<select id="selectView"
+		resultType="com.entity.view.WeFeesView" >
+		SELECT * FROM we_fees  we_fees <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+
+	<update id="payUp" parameterType="long">
+		update we_fees set is_pay='1' where id=#{param1}
+	</update>
+
+	<select id="calcFees" resultType="string">
+		select cast(sum(wf.water_fee+wf.electricity_fee) as char) fees  from we_fees wf
+		where 1 = 1
+		<if test="param1 != null and param1 != ''">
+			and hostel_no=#{param1}
+		</if>
+		group by wf.month
+		order by wf.month
+	</select>
+	
+</mapper>

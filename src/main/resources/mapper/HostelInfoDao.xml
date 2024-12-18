@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.HostelInfoDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.entity.HostelInfoEntity" id="hostelInfoMap">
+        <result property="hostelNo" column="hostel_no"/>
+        <result property="hostelName" column="hostel_name"/>
+        <result property="crtTime" column="crt_time"/>
+        <result property="num" column="num"/>
+    </resultMap>
+
+	<select id="selectListVO"
+		resultType="com.entity.vo.HostelInfoVO" >
+		SELECT * FROM hostel_info  hostel_info
+        <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+	<select id="selectVO"
+		resultType="com.entity.vo.HostelInfoVO" >
+		SELECT  hostel_info.* FROM hostel_info  hostel_info
+ 		<where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+
+    <select id="selectListView"
+		resultType="com.entity.view.HostelInfoView" >
+		SELECT  hostel_info.* FROM hostel_info  hostel_info
+        <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+	<select id="selectView"
+		resultType="com.entity.view.HostelInfoView" >
+		SELECT * FROM hostel_info  hostel_info <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+
+	<select id="selectHostelNo"
+			resultType="string" parameterType="long">
+		SELECT hostel_info.hostel_no hostelNo FROM hostel_info  hostel_info
+		where hostel_info.c1=#{param1} or hostel_info.c2=#{param1} or hostel_info.c3=#{param1}
+		or hostel_info.c4=#{param1} or hostel_info.c5=#{param1} or hostel_info.c6=#{param1}
+	</select>
+	
+</mapper>
